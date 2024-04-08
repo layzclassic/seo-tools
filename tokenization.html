@@ -1,0 +1,107 @@
+<body onload="brython()">
+    <div>
+        <textarea id="inputText" rows="10" cols="50" placeholder="Paste your text here..."></textarea>
+    </div>
+    <div>
+        <button onclick="processText()">Analyze Text</button>
+    </div>
+    <div>
+        <table id="outputTable">
+          <thead>
+            <tr>
+              <th>Term</th>
+              <th>Frequency</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td></td>
+              <td></td>
+            </tr>
+            <tr>
+              <td></td>
+              <td></td>
+            </tr>
+            <tr>
+              <td></td>
+              <td></td>
+            </tr>
+            <tr>
+              <td></td>
+              <td></td>
+            </tr>
+            <tr>
+              <td></td>
+              <td></td>
+            </tr>
+            <tr>
+              <td></td>
+              <td></td>
+            </tr>
+            <tr>
+              <td></td>
+              <td></td>
+            </tr>
+            <tr>
+              <td></td>
+              <td></td>
+            </tr>
+            <tr>
+              <td></td>
+              <td></td>
+            </tr>
+            <tr>
+              <td></td>
+              <td></td>
+            </tr>
+          </tbody>
+    </table>
+
+    </div>
+    <div>
+        <button onclick="resetTable()">Reset Table</button>
+    </div>
+
+    <script type="text/python">
+        from browser import document
+
+        def processText():
+            inputText = document['inputText'].value
+            termFreq = process_article(inputText)
+            displayResult(termFreq)
+
+        def process_article(article):
+            from collections import Counter
+            import re
+            
+            # Tokenize and count term frequencies
+            terms = re.findall(r'\b\w+\b', article.lower())
+            term_freq = Counter(terms)
+            
+            return term_freq
+
+        def displayResult(result):
+            tbody = document['outputTable'].querySelector('tbody')
+            numRows = len(tbody.children)
+            if numRows >= 10:
+                alert('Table is full! Please reset it.')
+                return
+            
+            # Add rows to the table
+            for term, freq in result.items():
+                row = document.createElement('tr')
+                term_cell = document.createElement('td')
+                freq_cell = document.createElement('td')
+                term_cell.text = term
+                freq_cell.text = str(freq)
+                row <= term_cell
+                row <= freq_cell
+                tbody <= row
+
+        def resetTable():
+            tbody = document['outputTable'].querySelector('tbody')
+            tbody.innerHTML = ''
+
+    </script>
+</body>
+
